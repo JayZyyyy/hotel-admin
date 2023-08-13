@@ -3,7 +3,13 @@ import HelloWorld from './components/HelloWorld.vue'
 </script>
 
 <template>
-  <router-view></router-view>
+  <div class="app-page">
+    <router-view></router-view>
+  </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.app-page {
+  width: 100%;
+}
+</style>
