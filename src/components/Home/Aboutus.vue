@@ -1,6 +1,8 @@
 <template>
-  <div class="about">
-    <img :src="aboutus" alt="" />
+  <div>
+    <div class="about">
+      <img :src="aboutus" alt="" />
+    </div>
   </div>
   <div class="message">
     <el-row>
@@ -42,7 +44,11 @@ import aboutus from '@/assets/aboutus.png'
 .about {
   margin: 10px auto;
   margin-top: 30px;
+  text-align: center;
 
+  .img {
+    display: block;
+  }
   img {
     width: 200px;
   }
