@@ -30,8 +30,6 @@
 
 <script setup>
 import logo from '../assets/logo.png'
-import { onMounted } from 'vue'
-import { getHotel } from '../api/index.js'
 import { Aboutus, Carousel, Detail, DropDown, PictureMask } from '../components/Home/index.js'
 import image4 from '../assets/4.png'
 import image5 from '../assets/5.png'
@@ -52,10 +50,6 @@ const scrollTo = () => {
     behavior: 'smooth'
   })
 }
-
-onMounted(() => {
-  getHotel()
-})
 </script>
 
 <style scoped lang="less">
@@ -106,6 +100,10 @@ onMounted(() => {
     color: black;
     font-size: 20px;
     letter-spacing: 1px;
+
+    a {
+      text-decoration: none;
+    }
   }
 }
 </style>

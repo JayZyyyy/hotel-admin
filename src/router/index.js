@@ -20,6 +20,11 @@ const routes = [
     path: '/homeSearch',
     name: 'homeSearch',
     component: () => import('../pages/HomeSearch.vue')
+  },
+  {
+    path: '/hotelInfo/:id',
+    name: 'HotelInfo',
+    component: () => import('../pages/HotelInfo.vue')
   }
 ]
 

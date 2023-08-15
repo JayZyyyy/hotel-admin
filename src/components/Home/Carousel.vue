@@ -1,8 +1,6 @@
 <template>
   <div class="carousel">
-    <Transition enter-active-class="animate__animated animate__fadeInRight" mode="in-out">
-      <el-image :src="showImg" :fit="fit" />
-    </Transition>
+    <el-image :src="showImg" :fit="fit" />
   </div>
 </template>
 
