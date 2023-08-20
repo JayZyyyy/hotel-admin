@@ -7,11 +7,13 @@ import App from './App.vue'
 import router from './router'
 import ElementPlus from 'element-plus'
 import { createPinia } from 'pinia'
+import piniaPluginPersist from 'pinia-plugin-persist'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import progressive from 'progressive-image/dist/vue' // 渐进式
 
 const pinia = createPinia()
+pinia.use(piniaPluginPersist)
 
 const app = createApp(App)
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {

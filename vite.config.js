@@ -19,5 +19,14 @@ export default defineConfig({
     Components({
       resolvers: [ElementPlusResolver()]
     })
-  ]
+  ],
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://43.156.9.217:8080/', // 将此处的后端IP和端口替换为实际的后端地址
+        changeOrigin: true,
+        rewrite: path => path.replace(/^\/api/, '') // 如果后端API的路径有前缀，可以在此处进行修改
+      }
+    }
+  }
 })

@@ -51,11 +51,7 @@ onMounted(() => getHotelList())
 <style lang="less" scoped>
 .show-hotel {
   width: 100%;
-
-  .blank {
-    height: 100px;
-    background-color: white;
-  }
+  padding-top: 5%;
 
   .show-body {
     width: 70%;

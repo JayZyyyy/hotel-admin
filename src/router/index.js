@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-
+import Order from '../components/User/Order.vue'
 const routes = [
   {
     path: '/',
@@ -25,6 +25,43 @@ const routes = [
     path: '/hotelInfo/:id',
     name: 'HotelInfo',
     component: () => import('../pages/HotelInfo.vue')
+  },
+  {
+    path: '/book',
+    name: 'book',
+    component: () => import('../pages/Book.vue')
+  },
+  {
+    path: '/user/:id',
+    component: () => import('../pages/User.vue'),
+    children: [
+      { path: '', component: () => import('../components/User/userInfo.vue') },
+      {
+        path: 'order',
+        name: 'order',
+        component: Order
+      },
+      {
+        path: 'userInfo',
+        name: 'userInfo',
+        component: () => import('../components/User/userInfo.vue')
+      },
+      {
+        path: 'passwordUpdate',
+        name: 'passwordUpdate',
+        component: () => import('../components/User/PasswordUpdate.vue')
+      },
+      {
+        path: 'roomSet',
+        name: 'roomSet',
+        component: () => import('../components/User/Admin/RoomSet.vue')
+      },
+      {
+        path: 'roomNum',
+        name: 'roomNum',
+        component: () => import('../components/User/Admin/roomNum.vue')
+      }
+    ]
   }
 ]
 

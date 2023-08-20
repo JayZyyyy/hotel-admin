@@ -17,7 +17,7 @@
           <span class="endDate">离店时间</span>
         </div>
         <el-date-picker
-          v-model="value"
+          v-model="dateArr"
           type="daterange"
           size="large"
           start-placeholder="入住日期"
@@ -25,7 +25,7 @@
         />
       </div>
       <div class="search-button">
-        <el-button type="primary" :icon="Search" size="large">搜索</el-button>
+        <el-button type="primary" :icon="Search" size="large" @click="searchHotel">搜索</el-button>
       </div>
     </div>
     <div class="bottom-box">
@@ -37,8 +37,10 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, watchEffect } from 'vue'
 import { Search } from '@element-plus/icons-vue'
+import { useHotelStore } from '@/store/hotel.js'
+
 const valuePlace = ref('')
 const options = [
   {
@@ -77,9 +79,27 @@ const options = [
   }
 ]
 
-const value = ref('')
+const dateArr = ref([])
+let startTime = ref('')
+let endTime = ref('')
+watchEffect(() => {
+  startTime.value = dateArr.value?.[0]
+  endTime.value = dateArr.value?.[1]
+})
 
 const keyInput = ref('')
+
+const hotelStore = useHotelStore()
+const searchHotel = () => {
+  if (startTime.value === undefined || endTime.value === undefined) {
+    ElMessage({
+      message: '需要先选择入住日期噢',
+      type: 'warning'
+    })
+    return
+  }
+  hotelStore.changeDate(startTime.value, endTime.value)
+}
 </script>
 
 <style scoped lang="less">
