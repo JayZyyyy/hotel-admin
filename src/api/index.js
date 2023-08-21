@@ -27,7 +27,7 @@ export const getOneHotel = id => {
 }
 
 export const getOrder = id => {
-  return axios.get('http://127.0.0.1:4523/m1/2763977-0-default/order/1').then(res => {
+  return axios.get('/api/order/1').then(res => {
     const { code, data } = res.data
     if (code === 200) {
       return data.data

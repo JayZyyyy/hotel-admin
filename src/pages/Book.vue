@@ -1,6 +1,8 @@
 <template>
   <div class="book-hotel">
-    <Header></Header>
+    <Header>
+      <template v-slot:user><UserNav></UserNav></template>
+    </Header>
     <div class="book-main">
       <div class="book-message">
         <div class="header-text">预订信息</div>
@@ -27,9 +29,9 @@
           </div>
           <div class="id-card">
             身份证号:<el-input v-model="idCard" v-idCard></el-input
-            ><span class="id-card-error" ref="idError">身份证格式错误</span>
+            ><span class="id-card-error" :style="errorStyle">身份证格式错误</span>
           </div>
-          <div class="book-remark">备注: <el-input v-model="textarea" /></div>
+          <div class="book-remark">备注: <el-input v-model="remarks" /></div>
         </div>
         <div class="remind">
           <b>取消政策: </b> {{ remindMessage1 }}
@@ -39,35 +41,35 @@
       </div>
       <div class="right-message">
         <div class="card-image">
-          <img src="" alt="" />
+          <img :src="room_image" alt="" />
         </div>
-        <div class="card-name">name</div>
-        <div class="card-address">地址:</div>
+        <div class="card-name">{{ hotel_name }}</div>
+        <div class="card-address">地址: {{ hotel_address }}</div>
         <el-divider border-style="dashed" />
         <div class="card_room">
           <span>入住房型</span>
           <div>
-            <span class="left">123</span>
-            <span class="right">间</span>
+            <span class="left">{{ room_name }}</span>
+            <span class="right">1间</span>
           </div>
           <span>价格名称</span>
           <div>
-            <span class="left">123</span>
+            <span class="left">{{ room_type }}</span>
           </div>
           <span>入住日期</span>
           <div>
-            <span class="left">123</span>
+            <span class="left">{{ startDate }}-{{ endDate }}</span>
             <span class="right">晚</span>
           </div>
           <span class="room-price-left">房费小计</span>
-          <span class="room-price-right">¥123</span>
+          <span class="room-price-right">¥{{ room_price }}</span>
         </div>
         <el-divider border-style="dashed" class="next-divider" />
         <div class="total-price">
           <span class="left">总金额</span>
-          <span class="right">¥123</span>
+          <span class="right">¥{{ room_price }}</span>
         </div>
-        <el-button type="primary" class="submit-button">提交订单</el-button>
+        <el-button type="primary" class="submit-button" @click="submitOrder">提交订单</el-button>
       </div>
     </div>
   </div>
@@ -76,18 +78,29 @@
 <script setup>
 import Header from '@/components/Header.vue'
 import { useHotelStore } from '@/store/hotel.js'
-import { ref } from 'vue'
+import { ref, reactive } from 'vue'
+import { useBookStore } from '../store/book'
 
 const remindMessage1 = '预付房费后，入住前一天免费取消。入住当天取消，收取一晚房费作为罚金。'
 const remindMessage2 =
   '酒店于住店当天15:00后办理入住，离店当天12:00前办理退房，入离日期以当地时间为准。如您在15:00前到达，可能需要等待方能入住。若超过酒店最多入住人数，则可能需要补差价或酒店拒绝入住，具体以酒店安排为准'
+
+// 右边的数据
+const bookStore = useBookStore()
+const hotel_id = bookStore.hotel_id
+const hotel_name = bookStore.hotel_name
+const hotel_address = bookStore.hotel_address
+const room_name = bookStore.room_name
+const room_type = bookStore.room_type
+const room_price = bookStore.room_price
+const room_image = bookStore.room_image
 
 const hotelStore = useHotelStore()
 const startDate = hotelStore.startDate
 const endDate = hotelStore.endDate
 const roomNum = 1
 
-const numValue = ref('')
+const numValue = ref(0)
 const options = [
   {
     value: '1',
@@ -105,13 +118,34 @@ const options = [
 
 const name = ref('')
 const tel = ref('')
-const textarea = ref('')
 const idCard = ref('')
+const remarks = ref('')
+
+const orderMessage = reactive({
+  startDate: startDate,
+  endDate: endDate,
+  hotelId: hotel_id,
+  roomName: room_name,
+  roomType: room_type,
+  roomNum: roomNum,
+  userNum: numValue,
+  bookerId: idCard,
+  bookerName: name,
+  bookerTel: tel,
+  remarks: remarks
+  // sessionId
+})
+
+const submitOrder = () => {
+  console.log(orderMessage)
+}
+
+const errorStyle = ref({
+  display: 'none'
+})
 const isIdCardValid = value => {
   return /^[0-9]{17}([0-9]|X)$/i.test(value)
 }
-
-const idError = ref('')
 const vIdCard = {
   mounted(el, binding) {
     // 在 el-input 元素上监听 input 事件
@@ -119,9 +153,9 @@ const vIdCard = {
       // 将值传递给指令
       binding = idCard.value
       if (!isIdCardValid(binding)) {
-        el.classList.add('invalid')
+        errorStyle.value.display = 'inline-block'
       } else {
-        el.classList.remove('invalid')
+        errorStyle.value.display = 'none'
       }
     })
   }
@@ -259,6 +293,11 @@ const vIdCard = {
         height: 180px;
 
         background-color: blanchedalmond;
+
+        img {
+          width: 100%;
+          height: 180px;
+        }
       }
 
       .card-name {
@@ -287,7 +326,6 @@ const vIdCard = {
 
           .left {
             font-size: 15px;
-            color: black;
           }
 
           .right {
@@ -317,7 +355,7 @@ const vIdCard = {
         position: relative;
         .left {
           font-size: 14px;
-          font-weight: 700;
+          font-weight: ;
         }
 
         .right {

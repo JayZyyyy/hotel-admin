@@ -8,7 +8,7 @@
         <i><House /></i>
         <span>官网首页</span>
       </button>
-      <button>
+      <button @click="toMyOrder">
         <i><Goods /></i>我的订单
       </button>
       <button>
@@ -27,6 +27,8 @@ import router from '../router'
 const toHome = () => {
   router.push('/home')
 }
+
+const toMyOrder = () => {}
 </script>
 
 <style lang="less" scoped>

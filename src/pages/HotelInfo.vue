@@ -1,15 +1,17 @@
 <template>
   <div class="hotel-info">
-    <Header></Header>
+    <Header
+      ><template v-slot:user><UserNav></UserNav></template
+    ></Header>
     <HotelDetailShow :hotelDetail="hotelDetail"></HotelDetailShow>
     <DateShow></DateShow>
     <div class="detail-show">
       <RoomHeader></RoomHeader>
       <RoomInfo :roomDetail="room" v-for="room in roomDetail" :key="room.name">
-        <template v-slot:button>
+        <template v-slot:button="slotProps">
           <el-col :span="4"
             ><div class="grid-content ep-bg-purple-light" />
-            <el-button :type="buttonType" :disabled="disabled" @click="toBookPage">{{ showText }}</el-button>
+            <el-button :type="buttonType" :disabled="disabled" @click="toBookPage(slotProps)">{{ showText }}</el-button>
           </el-col>
         </template></RoomInfo
       >
@@ -25,14 +27,16 @@ import { Aboutus } from '../components/Home'
 import { ref } from 'vue'
 import { getOneHotel } from '@/api/index.js'
 import { useRouter, useRoute } from 'vue-router'
+import { useBookStore } from '@/store/book.js'
 
 const hotelDetail = ref({})
 const roomDetail = ref([])
 const route = useRoute()
+const bookStore = useBookStore()
 const getData = async () => {
   hotelDetail.value = await getOneHotel(route.params.id)
   roomDetail.value = hotelDetail.value.nameList
-  console.log(roomDetail.value)
+  bookStore.addHotelDetail(Number(route.params.id), hotelDetail.value.name, hotelDetail.value.address)
 }
 getData()
 
@@ -54,7 +58,9 @@ const buttonType = ref('primary')
 // changeDisabled()
 
 const router = useRouter()
-const toBookPage = () => {
+const toBookPage = slotProps => {
+  const { room_name, room_type, room_price, room_image } = slotProps.roomDetail
+  bookStore.addRoomDetail(room_name, room_type, room_price, room_image)
   router.push({
     name: 'book'
   })

@@ -6,6 +6,7 @@
     <div class="info">
       <h2>{{ name }}</h2>
       <div class="address"><i>地址: </i>{{ address }}</div>
+      <div class="tel"><i>电话: </i>{{ tel }}</div>
       <div class="intro"><i>简介: </i>{{ intro }}</div>
       <div class="tag"><el-tag>经济型</el-tag> <el-tag>市中心</el-tag></div>
       <div class="hotel-icon">
@@ -33,7 +34,7 @@ import { useRouter, useRoute } from 'vue-router'
 const props = defineProps({
   hotel: Object
 })
-const { id, name, address, intro, picture } = props.hotel
+const { id, name, address, intro, picture, tel } = props.hotel
 
 // 路由跳转
 const router = useRouter()
@@ -80,7 +81,16 @@ const toHotelInfo = () => {
       font-weight: 700;
     }
     .address {
-      padding-top: 20px;
+      padding-top: 10px;
+      font-size: 16px;
+
+      i {
+        font-weight: 500;
+      }
+    }
+
+    .tel {
+      padding-top: 10px;
       font-size: 16px;
 
       i {
@@ -89,7 +99,7 @@ const toHotelInfo = () => {
     }
 
     .intro {
-      padding-top: 15px;
+      padding-top: 10px;
       font-size: 16px;
       width: 500px;
 
@@ -102,7 +112,7 @@ const toHotelInfo = () => {
       margin-left: -10px;
       .el-tag {
         margin-left: 10px;
-        margin-top: 15px;
+        margin-top: 10px;
         padding-left: 10px;
         background-color: white;
         border: solid 1px skyblue;

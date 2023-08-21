@@ -7,38 +7,31 @@
       <h2>{{ name }}</h2>
       <div class="address"><i>地址: </i>{{ address }}</div>
       <div class="intro"><i>简介: </i>{{ intro }}</div>
+      <div class="tel"><i>电话: </i>{{ tel }}</div>
       <div class="tag"><el-tag>经济型</el-tag> <el-tag>市中心</el-tag></div>
       <div class="hotel-price">
         ¥ <el-text tag="b">{{ price }}</el-text
         >起
       </div>
     </div>
-    <el-button type="primary" size="large" @click="toHotelInfo" class="updateButton">修改信息</el-button>
-    <el-button type="primary" size="large" @click="toHotelInfo" class="deleteButton">删除酒店</el-button>
+    <el-button type="primary" size="large" class="updateButton">修改信息</el-button>
+    <el-button type="primary" size="large" class="deleteButton">删除酒店</el-button>
   </div>
 </template>
 
 <script setup>
-import { defineProps } from 'vue'
+import { defineProps, ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 
 const props = defineProps({
   hotel: Object
 })
-const { id, name, address, intro, picture, price } = props.hotel
+const { id, name, address, intro, picture, tel } = props.hotel
+const price = ref(99)
 
 // 路由跳转
 const router = useRouter()
 const route = useRoute()
-
-const toHotelInfo = () => {
-  router.push({
-    name: 'HotelInfo',
-    params: {
-      id: id
-    }
-  })
-}
 </script>
 
 <style scoped lang="less">
@@ -64,7 +57,7 @@ const toHotelInfo = () => {
   .info {
     display: inline-block;
     position: absolute;
-    width: 300px;
+    width: 280px;
     margin-left: 20px;
     margin-top: 10px;
     background-color: #fffcf3;
@@ -74,7 +67,16 @@ const toHotelInfo = () => {
       font-weight: 700;
     }
     .address {
-      padding-top: 20px;
+      padding-top: 10px;
+      font-size: 16px;
+
+      i {
+        font-weight: 500;
+      }
+    }
+
+    .tel {
+      padding-top: 10px;
       font-size: 16px;
 
       i {
@@ -83,7 +85,7 @@ const toHotelInfo = () => {
     }
 
     .intro {
-      padding-top: 15px;
+      padding-top: 10px;
       font-size: 16px;
       width: 500px;
 
@@ -103,8 +105,8 @@ const toHotelInfo = () => {
     }
 
     .hotel-price {
-      width: 100px;
-      height: 50px;
+      width: 90px;
+      height: 40px;
       font-size: 14px;
       color: #ff5341;
       font: 1em sans-serif;

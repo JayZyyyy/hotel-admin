@@ -12,8 +12,8 @@
 
     <div class="room-type">
       <RoomRow v-for="row in roomList" :rowData="row" :key="row.room_id">
-        <template v-slot:button>
-          <slot name="button"></slot>
+        <template v-slot:button="slotProps">
+          <slot name="button" :roomDetail="slotProps.roomDetail"></slot>
         </template>
       </RoomRow>
     </div>
