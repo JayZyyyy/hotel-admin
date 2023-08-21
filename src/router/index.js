@@ -34,9 +34,10 @@ const routes = [
   },
   {
     path: '/user/:id',
+    name: 'user',
     component: () => import('../pages/User.vue'),
     children: [
-      { path: '', component: () => import('../components/User/userInfo.vue') },
+      { path: '', name: 'user', component: () => import('../components/User/userInfo.vue') },
       {
         path: 'order',
         name: 'order',
@@ -90,6 +91,22 @@ const router = createRouter({
   history: createWebHistory(),
   routes: routes,
   scrollBehavior
+})
+
+router.beforeEach((to, from, next) => {
+  const sessionId = localStorage.getItem('session_id') // 从 localStorage 获取 sessionId
+
+  if (sessionId) {
+    //已登录
+    next()
+  } else {
+    //未登录定向到登录页面
+    if (to.path == '/login') {
+      next()
+    } else {
+      next('/login')
+    }
+  }
 })
 
 export default router

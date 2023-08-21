@@ -1,29 +1,20 @@
 <template>
   <div class="order-show">
-    <OrderChild v-for="order in orderList" :order="order" :key="order.order_id"></OrderChild>
+    <OrderChild v-for="order in orderList.orders" :order="order" :key="order.order_id"></OrderChild>
   </div>
 </template>
 
 <script setup>
 import OrderChild from './OrderChild.vue'
-import { onMounted, ref } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
+import { ref } from 'vue'
 import { getOrder } from '@/api/index.js'
 
-const route = useRoute()
-const userId = route.params.id
-const getData = async () =>
-  await new Promise(resolve => {
-    getOrder(userId).then(res => {
-      return resolve(res)
-    })
-  })
-let orderList = ref([])
-onMounted(async () => {
-  await getData().then(res => {
-    orderList.value = res
-  })
-})
+const session_id = window.localStorage.getItem('session_id')
+const orderList = ref([])
+const getOrderList = async () => {
+  orderList.value = await getOrder(session_id)
+}
+getOrderList()
 </script>
 
 <style scoped lang="less">

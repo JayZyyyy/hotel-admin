@@ -5,7 +5,7 @@
     </Header>
     <div class="user-bg">
       <div class="user-tab">
-        <div class="user-welcome">xx ,您好</div>
+        <div class="user-welcome">{{ name }} ,您好</div>
         <div class="tabs">
           <div>
             <span class="number">0</span>
@@ -37,6 +37,9 @@ import Header from '../components/Header.vue'
 import { User } from '../components/User'
 import { Aboutus } from '../components/Home'
 import UserNav from '../components/UserNav.vue'
+import { ref } from 'vue'
+
+const name = window.localStorage.getItem('user_name')
 </script>
 
 <style lang="less" scoped>

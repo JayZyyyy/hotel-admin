@@ -80,6 +80,9 @@ import Header from '@/components/Header.vue'
 import { useHotelStore } from '@/store/hotel.js'
 import { ref, reactive } from 'vue'
 import { useBookStore } from '../store/book'
+import { bookRoom } from '@/api/index.js'
+import { useRouter } from 'vue-router'
+const router = useRouter()
 
 const remindMessage1 = '预付房费后，入住前一天免费取消。入住当天取消，收取一晚房费作为罚金。'
 const remindMessage2 =
@@ -120,7 +123,7 @@ const name = ref('')
 const tel = ref('')
 const idCard = ref('')
 const remarks = ref('')
-
+const session_id = window.localStorage.getItem('session_id')
 const orderMessage = reactive({
   startDate: startDate,
   endDate: endDate,
@@ -132,12 +135,24 @@ const orderMessage = reactive({
   bookerId: idCard,
   bookerName: name,
   bookerTel: tel,
-  remarks: remarks
-  // sessionId
+  remarks: remarks,
+  sessionId: session_id
 })
 
-const submitOrder = () => {
-  console.log(orderMessage)
+const submitOrder = async () => {
+  const res = await bookRoom(orderMessage)
+  if (res.code === 200) {
+    ElMessage({
+      message: '预定成功',
+      type: 'success'
+    })
+    router.push({ name: 'HotelInfo', params: { id: hotel_id } })
+  } else {
+    ElMessage({
+      message: '预定失败，请重试',
+      type: 'warning'
+    })
+  }
 }
 
 const errorStyle = ref({
@@ -355,7 +370,6 @@ const vIdCard = {
         position: relative;
         .left {
           font-size: 14px;
-          font-weight: ;
         }
 
         .right {

@@ -11,32 +11,20 @@
         <el-input v-model="Loginform.account"></el-input>
       </el-form-item>
       <el-form-item label="密码">
-        <el-input
-          type="password"
-          v-model="Loginform.pass"
-          autocomplete="off"
-        ></el-input>
+        <el-input type="password" v-model="Loginform.pass" autocomplete="off"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-checkbox
-          v-model="Loginform.privacyPolicy"
-          name="privacyPolicy"
-          class="policy"
-        >
+        <el-checkbox v-model="Loginform.privacyPolicy" name="privacyPolicy" class="policy">
           <template v-slot>
             勾选即视为您已阅读并同意我们的
-            <a href="#">《好速来会员预订官网服务协议》</a>、
-            <a href="#">《好速来会员预订官网隐私政策》</a>、
-            <a href="#">《好速来会员服务协议》</a>和
-            <a href="#">《好速来会员服务隐私政策》</a>，
+            <a href="#">《好速来会员预订官网服务协议》</a>、 <a href="#">《好速来会员预订官网隐私政策》</a>、
+            <a href="#">《好速来会员服务协议》</a>和 <a href="#">《好速来会员服务隐私政策》</a>，
             进而通过手机号码登录好速来会员预订官网和享用好速来会员服务
           </template>
         </el-checkbox>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="onSubmit" class="login-button"
-          >登录</el-button
-        >
+        <el-button type="primary" @click="onSubmit" class="login-button">登录</el-button>
       </el-form-item>
       <el-form-item class="register-link">
         享更多特权，
@@ -46,68 +34,65 @@
   </el-card>
 </template>
 
-
 <script>
-import {tryLogin} from "@/api/index.js";
+import { tryLogin } from '@/api/index.js'
 
 export default {
   data() {
     return {
       Loginform: {
-        account: "",
-        pass: "",
-        privacyPolicy: false,
-      },
-    };
+        account: '',
+        pass: '',
+        privacyPolicy: false
+      }
+    }
   },
   methods: {
     onSubmit() {
-      if (
-        this.Loginform.account &&
-        this.Loginform.pass &&
-        this.Loginform.privacyPolicy
-      ) {
-        console.log("submit!");
+      if (this.Loginform.account && this.Loginform.pass && this.Loginform.privacyPolicy) {
         let loginForm = {
           account: this.Loginform.account,
           password: this.Loginform.pass
         }
-        const loginAction = async (loginForm)=> {
+        const loginAction = async loginForm => {
           let result = await tryLogin(loginForm)
           if (result.code === 200) {
-            localStorage.setItem("session_id", result.data.session_id)
-            localStorage.setItem("user_role", result.data.type)
+            localStorage.setItem('session_id', result.data.session_id)
+            localStorage.setItem('user_role', result.data.type)
+            localStorage.setItem('user_name', this.Loginform.account)
+            this.$router.push({
+              name: 'homeSearch'
+            })
           }
         }
         loginAction(loginForm)
       } else {
-        let mes1 = "";
-        let mes2 = "";
-        let mes3 = "";
-        let mes = "";
-        if (!this.Loginform.account) mes1 = "用户名";
-        if (!this.Loginform.pass) mes2 = "密码";
-        if (!this.Loginform.privacyPolicy) mes3 = "勾选同意协议";
-        mes = "请输入" + mes1 +" " + mes2 +" " + mes3;
+        let mes1 = ''
+        let mes2 = ''
+        let mes3 = ''
+        let mes = ''
+        if (!this.Loginform.account) mes1 = '用户名'
+        if (!this.Loginform.pass) mes2 = '密码'
+        if (!this.Loginform.privacyPolicy) mes3 = '勾选同意协议'
+        mes = '请输入' + mes1 + ' ' + mes2 + ' ' + mes3
         // alert(mes)
-        this.$alert(mes, "错误提示", {
-          confirmButtonText: "确定",
-          callback: (action) => {
+        this.$alert(mes, '错误提示', {
+          confirmButtonText: '确定',
+          callback: action => {
             this.$message({
-              type: "info",
-              message: `action: ${action}`,
-            });
-          },
-        });
+              type: 'info',
+              message: `action: ${action}`
+            })
+          }
+        })
       }
     },
     changeType() {
-      this.$emit("event", 2);
-    },
-  },
-};
+      this.$emit('event', 2)
+    }
+  }
+}
 </script>
-
 
 <style lang="less" scoped>
 /* // 登录卡片 */
@@ -127,7 +112,7 @@ export default {
     &:before,
     &:after {
       display: table;
-      content: "";
+      content: '';
     }
     &:after {
       clear: both;

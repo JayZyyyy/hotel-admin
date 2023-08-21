@@ -1,35 +1,54 @@
 <template>
   <div class="order-child">
     <div class="header">
-      <div><span>订单号: </span> <span>123123</span></div>
-      <div><span>预订日期: </span> <span>12321312321</span></div>
+      <div>
+        <span>订单号: </span> <span>{{ order.id }}</span>
+      </div>
+      <div>
+        <span>预订日期: </span> <span>{{ order.time }}</span>
+      </div>
     </div>
     <div class="image">
       <img src="picture" alt="" />
     </div>
     <div class="info">
-      <h2>123</h2>
-      <div class="first-div"><i>风格房 </i>123</div>
-      <div><i>入住日期: </i>123</div>
-      <div><i>离店日期: </i>123</div>
-      <div><i>共x晚 </i>123</div>
+      <h2>{{ hotel_name }}</h2>
+      <div class="first-div"><i>风格房: </i>{{ order.room_type }}</div>
+      <div><i>入住日期: </i>{{ order.start_date }}</div>
+      <div><i>离店日期: </i>{{ order.end_date }}</div>
+      <div>
+        <i>共{{ betweenDays(order.start_date, order.end_date) }}晚 </i>
+      </div>
     </div>
     <div class="hotel-price">
       <div class="price">总价: ¥ <el-text tag="b">123</el-text></div>
       <div>
-        <el-button type="info" size="medium" disabled>已支付</el-button>
-        <el-button type="primary" size="medium">取消订单</el-button>
+        <el-button type="info" size="default" disabled>已支付</el-button>
+        <el-button type="primary" size="default" @click="cancelOrder">取消订单</el-button>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { defineProps } from 'vue'
-
+import { defineProps, ref } from 'vue'
+import { getOneHotel } from '../../api'
+import { betweenDays } from '@/utils/index.js'
 const props = defineProps({
   order: Object
 })
+
+const hotel_name = ref('')
+const hotel = async () => {
+  const hotelDetail = await getOneHotel(props.order.hotel_id)
+  hotel_name.value = hotelDetail.name
+}
+hotel()
+
+
+const cancelOrder = () => {
+  
+}
 </script>
 
 <style scoped lang="less">
