@@ -53,11 +53,11 @@
 </template>
 
 <script>
-import { checkAccount } from "@/api/index.js";
+import {checkAccountAndRegister, tryLogin} from "@/api/index.js";
 
 export default {
   data() {
-    var checkTel = (rule, value, callback) => {
+    let checkTel = (rule, value, callback) => {
       let reg1 = /^1\d{10}$/;
       let reg2 = /^[0-9]{6,8}$/;
       let reg3 = /^(([0-9]{11})|([0-9]{3}\-[0-9]{8})|([0-9]{4}\-[0-9]{7}))$/;
@@ -76,7 +76,7 @@ export default {
         callback(new Error("手机号格式不正确"));
       }
     };
-    var validatePass = (rule, value, callback) => {
+    let validatePass = (rule, value, callback) => {
       if (value === "") {
         callback(new Error("请输入密码"));
       } else {
@@ -86,7 +86,7 @@ export default {
         callback();
       }
     };
-    var validatePass2 = (rule, value, callback) => {
+    let validatePass2 = (rule, value, callback) => {
       if (value === "") {
         callback(new Error("请再次输入密码"));
       } else if (value !== this.ruleForm.password) {
@@ -152,13 +152,13 @@ export default {
       };
       // 提交注册表单并交由后台校验
       const submit = async (form) => {
-        let result = await checkAccount(form);
+        let result = await checkAccountAndRegister(form);
         // 后台校验成功;
-        if (result) {
+        if (result.code === 200) {
           this.goHomeSearch();
         } else {
           //校验失败
-          this.$alert("该用户名已被注册", "注册失败", {
+          await this.$alert("该用户名已被注册", "注册失败", {
             confirmButtonText: "确定",
             callback: (action) => {
               this.$message({
@@ -172,18 +172,29 @@ export default {
       submit(form); //触发提交
     },
     goHomeSearch() {
-      localStorage.setItem("account", this.account);
-      localStorage.setItem("password", this.password);
-      let location = { name: "homeSearch" };
-      let query = { account: this.account, password: this.password };
-      location.query = query;
-      if (this.$route.params) {
-        location.params = this.$route.params;
-        this.$router.push(location);
+      let loginForm = {
+        account: this.ruleForm.account,
+        password: this.ruleForm.password
       }
+      const loginAction = async (loginForm) => {
+        let result = await tryLogin(loginForm)
+        if (result.code === 200) {
+          localStorage.setItem("session_id", result.data.session_id)
+          localStorage.setItem("user_role", result.data.type)
+          let location = { name: "homeSearch" };
+          let query = { account: this.ruleForm.account, password: this.ruleForm.password };
+          location.query = query;
+          if (this.$route.params) {
+            location.params = this.$route.params;
+            this.$router.push(location);
+          }
+        }
+      }
+      loginAction(loginForm)
     },
   },
 };
+
 </script>
 
 <style lang="less" scoped>

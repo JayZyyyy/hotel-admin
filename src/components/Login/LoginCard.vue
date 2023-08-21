@@ -48,6 +48,8 @@
 
 
 <script>
+import {tryLogin} from "@/api/index.js";
+
 export default {
   data() {
     return {
@@ -66,6 +68,18 @@ export default {
         this.Loginform.privacyPolicy
       ) {
         console.log("submit!");
+        let loginForm = {
+          account: this.Loginform.account,
+          password: this.Loginform.pass
+        }
+        const loginAction = async (loginForm)=> {
+          let result = await tryLogin(loginForm)
+          if (result.code === 200) {
+            localStorage.setItem("session_id", result.data.session_id)
+            localStorage.setItem("user_role", result.data.type)
+          }
+        }
+        loginAction(loginForm)
       } else {
         let mes1 = "";
         let mes2 = "";

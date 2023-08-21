@@ -1,4 +1,4 @@
-import axios from 'axios'
+  import axios from 'axios'
 
 export const getHotel = searchMessage => {
   return axios.post('/api/searchHotel', searchMessage).then(response => {
@@ -27,18 +27,28 @@ export const getOneHotel = id => {
   })
 }
 
-export const checkAccount = formData => {
+export const checkAccountAndRegister = formData => {
   return axios.post('/api/register',formData).then(res => {
     const { code, data } = res.data
     // 因为mock返回的code很随机这里先不判断等于200
-    if(code === 200) {
-      return 1
+    if(res.data) {
+      return res.data
     } else {
       throw new Error('提交失败')
     }
   })
 }
 
+export const tryLogin = formData => {
+  return axios.post('/api/login', formData).then(res => {
+    if(res.data) {
+      return res.data
+    } else {
+      throw new Error('Network error')
+    }
+  })
+
+}
 export const getOrder = id => {
   return axios.get('http://127.0.0.1:4523/m1/2763977-0-default/order/1').then(res => {
     const { code, data } = res.data
