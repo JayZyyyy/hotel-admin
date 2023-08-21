@@ -15,6 +15,9 @@
         <i><Phone /></i>联系我们
       </button>
     </div>
+    <div class="user">
+      <slot name="user"></slot>
+    </div>
   </div>
 </template>
 
@@ -33,6 +36,9 @@ const toHome = () => {
   background-color: whitesmoke;
   display: flex;
   justify-content: space-between;
+  background-image: url(../assets/header-background.png);
+  background-size: 120%;
+  background-position: 10% 10%;
 
   .logo {
     width: 200px;
@@ -54,10 +60,10 @@ const toHome = () => {
     button {
       padding: 20px;
       color: black;
-      background-color: whitesmoke;
       font-size: 22px;
       margin-left: 20px;
       cursor: pointer;
+      background: transparent;
 
       i {
         display: inline-block;
@@ -68,6 +74,11 @@ const toHome = () => {
         vertical-align: middle;
       }
     }
+  }
+  .user {
+    position: absolute;
+    top: 3.8%;
+    right: 16%;
   }
 }
 </style>
