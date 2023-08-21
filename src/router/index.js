@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Order from '../components/User/Order.vue'
+import NotFound from '../pages/NotFound.vue'
 const routes = [
   {
     path: '/',
@@ -59,10 +60,21 @@ const routes = [
       {
         path: 'roomNum',
         name: 'roomNum',
-        component: () => import('../components/User/Admin/roomNum.vue')
+        component: () => import('../components/User/Admin/RoomNum.vue')
+      },
+      {
+        path: 'hotelSet',
+        name: 'hotelSet',
+        component: () => import('../components/User/Root-Admin/HotelSet.vue')
+      },
+      {
+        path: 'hotelSeel',
+        name: 'hotelSeel',
+        component: () => import('../components/User/Root-Admin/hotelSeel.vue')
       }
     ]
-  }
+  },
+  { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound }
 ]
 
 const scrollBehavior = function (to, from, savedPosition) {

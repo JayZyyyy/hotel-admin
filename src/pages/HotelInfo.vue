@@ -5,7 +5,7 @@
     <DateShow></DateShow>
     <div class="detail-show">
       <RoomHeader></RoomHeader>
-      <RoomInfo :roomDetail="room" v-for="room in roomDetail" :key="room.room_id">
+      <RoomInfo :roomDetail="room" v-for="room in roomDetail" :key="room.name">
         <template v-slot:button>
           <el-col :span="4"
             ><div class="grid-content ep-bg-purple-light" />
@@ -24,13 +24,15 @@ import { HotelDetailShow, DateShow, RoomInfo, RoomHeader } from '../components/H
 import { Aboutus } from '../components/Home'
 import { ref } from 'vue'
 import { getOneHotel } from '@/api/index.js'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 
 const hotelDetail = ref({})
 const roomDetail = ref([])
+const route = useRoute()
 const getData = async () => {
-  hotelDetail.value = await getOneHotel()
+  hotelDetail.value = await getOneHotel(route.params.id)
   roomDetail.value = hotelDetail.value.nameList
+  console.log(roomDetail.value)
 }
 getData()
 

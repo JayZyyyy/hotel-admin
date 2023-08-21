@@ -33,7 +33,7 @@ const props = defineProps({
 
 <style lang="less" scoped>
 .hotel-detail-info {
-  width: 75%;
+  width: 70%;
   height: 380px;
   margin: 0 auto;
   display: flex;
@@ -44,24 +44,25 @@ const props = defineProps({
     background: skyblue;
     margin-top: 13px;
     margin-left: 20px;
-    flex: 1;
+    flex: 1.3;
   }
 
   .hotel-detail-message {
-    width: 500px;
-    height: 300px;
-    left: 740px;
     margin-top: 30px;
     color: black;
     font-weight: 700;
     padding-left: 60px;
-    flex: 1.5;
+    flex: 1.4;
 
     .hotel-name {
       padding-top: 25px;
       .el-text {
         font-size: 26px;
       }
+    }
+
+    .el-divider {
+      width: 450px;
     }
 
     .hotel-address-tel {

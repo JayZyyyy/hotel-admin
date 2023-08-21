@@ -15,7 +15,7 @@
   width: 100%;
   height: 30px;
   margin-top: 10px;
-  padding-left: 10px;
+
   background-color: #94c9ff;
   display: flex;
   color: white;
@@ -24,12 +24,12 @@
   overflow: hidden;
 
   .room-type {
-    flex: 1.8;
+    flex: 1.9;
     padding: 5px;
   }
 
   .room-detail {
-    flex: 1.4;
+    flex: 1.5;
     padding: 5px;
   }
   .room-breakfast {

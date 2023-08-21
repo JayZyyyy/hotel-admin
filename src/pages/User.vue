@@ -1,6 +1,8 @@
 <template>
   <div class="user-pages">
-    <Header></Header>
+    <Header>
+      <template v-slot:user><UserNav></UserNav></template>
+    </Header>
     <div class="user-bg">
       <div class="user-tab">
         <div class="user-welcome">xx ,您好</div>
@@ -34,6 +36,7 @@
 import Header from '../components/Header.vue'
 import { User } from '../components/User'
 import { Aboutus } from '../components/Home'
+import UserNav from '../components/UserNav.vue'
 </script>
 
 <style lang="less" scoped>

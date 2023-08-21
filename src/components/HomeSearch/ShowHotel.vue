@@ -5,7 +5,9 @@
       <div class="header">
         <div class="top-message">
           <b>查询到 </b>
-          <b><span>xxx</span></b>
+          <b
+            ><span>{{ count }}</span></b
+          >
           <b> 家酒店</b>
         </div>
         <div class="sort-button">
@@ -29,9 +31,9 @@
 </template>
 
 <script setup>
-import { onBeforeMount, onMounted, ref } from 'vue'
+import { onBeforeMount, onMounted, ref, getCurrentInstance } from 'vue'
 import HotelDetail from './HotelDetail.vue'
-import { getHotel } from '../../api/index.js'
+import { getHotel, getAllHotels } from '@/api/index.js'
 
 const sortWay = ref('默认排序')
 const changeSort = message => {
@@ -39,13 +41,19 @@ const changeSort = message => {
 }
 
 // 获取酒店信息
+const count = ref(0)
 let hotelList = ref([])
 const getHotelList = async () => {
-  hotelList.value = await getHotel()
-  console.log(hotelList.value)
+  hotelList.value = await getAllHotels()
+  count.value = hotelList.value.length
 }
-
 onMounted(() => getHotelList())
+
+// 获取全局的 vue 实例
+let { proxy } = getCurrentInstance()
+proxy?.$mitt.on('searchHotel', res => {
+  hotelList.value = res
+})
 </script>
 
 <style lang="less" scoped>

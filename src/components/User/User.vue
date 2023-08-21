@@ -20,8 +20,16 @@
             <span>房型设计</span>
           </el-menu-item>
           <el-menu-item index="roomNum" v-bind:class="[isAdminActive ? show : noShow]">
-            <el-icon><HomeFilled /></el-icon>
+            <el-icon><ZoomIn /></el-icon>
             <span>空房查询</span>
+          </el-menu-item>
+          <el-menu-item index="hotelSet" v-bind:class="[isAdminActive ? show : noShow]">
+            <el-icon><Setting /></el-icon>
+            <span>酒店设置</span>
+          </el-menu-item>
+          <el-menu-item index="hotelSeel" v-bind:class="[isAdminActive ? show : noShow]">
+            <el-icon><PieChart /></el-icon>
+            <span>营业状况</span>
           </el-menu-item>
         </el-menu></el-aside
       >

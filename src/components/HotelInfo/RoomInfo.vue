@@ -2,7 +2,7 @@
   <div class="room-info">
     <div class="room-img">
       <div class="image">
-        <img alt="" />
+        <img :src="roomDetail.room_image" />
       </div>
       <div class="room-name">
         {{ roomDetail.name }}
@@ -11,7 +11,7 @@
     </div>
 
     <div class="room-type">
-      <RoomRow v-for="row in typeList" :rowData="row" :key="row.room_price">
+      <RoomRow v-for="row in roomList" :rowData="row" :key="row.room_id">
         <template v-slot:button>
           <slot name="button"></slot>
         </template>
@@ -28,7 +28,7 @@ import { useRouter } from 'vue-router'
 const props = defineProps({
   roomDetail: Object
 })
-const typeList = props.roomDetail.typeList
+const roomList = props.roomDetail.roomList
 </script>
 
 <style scoped lang="less">
@@ -45,7 +45,11 @@ const typeList = props.roomDetail.typeList
     height: 130px;
     margin-left: 10px;
     padding-top: 10px;
-    background: tomato;
+
+    img {
+      width: 190px;
+      height: 130px;
+    }
 
     .room-name {
       position: absolute;

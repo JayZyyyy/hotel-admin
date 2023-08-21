@@ -2,7 +2,7 @@ import dayjs from 'dayjs'
 import moment from 'moment'
 
 export function dateToLocale(date) {
-  return dayjs(date.getTime()).format('YYYY-MM-DD')
+  return dayjs(date).format('YYYY-MM-DD')
 }
 
 export function betweenDays(start, end) {

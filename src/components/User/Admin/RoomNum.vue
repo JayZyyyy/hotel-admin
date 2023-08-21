@@ -1,15 +1,11 @@
 <template>
   <div class="room-set">
-    <div class="top">
-      <span class="span">房型设置</span>
-      <el-button type="primary" plain>添加房型</el-button>
-    </div>
     <RoomHeader> </RoomHeader>
     <RoomInfo :roomDetail="room" v-for="room in roomDetail" :key="room.room_id">
       <template v-slot:button>
         <el-col :span="4"
           ><div class="grid-content ep-bg-purple-light" />
-          <el-button type="primary">立即修改</el-button>
+          <el-text>空房数量</el-text>
         </el-col>
       </template></RoomInfo
     >

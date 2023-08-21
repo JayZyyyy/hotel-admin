@@ -1,6 +1,8 @@
 <template>
   <div class="homeSearch">
-    <Header></Header>
+    <Header>
+      <template v-slot:user><UserNav></UserNav></template>
+    </Header>
     <div class="img-bg">
       <el-image :src="backgroundImage" alt="" fit="contain" />
     </div>

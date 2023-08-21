@@ -3,7 +3,7 @@
     <el-row>
       <el-col :span="6"
         ><div class="grid-content ep-bg-purple" />
-        {{ rowData.room_detail }}</el-col
+        {{ rowData.room_type }}</el-col
       >
       <el-col :span="3"
         ><div class="grid-content ep-bg-purple-light" />
@@ -19,7 +19,7 @@
       <el-col :span="3"
         ><div class="grid-content ep-bg-purple-light" />
         <el-icon><Avatar /></el-icon>
-        × {{ rowData.bookerNum }}</el-col
+        × {{ rowData.booker_num }}</el-col
       >
       <el-col :span="4"
         ><div class="grid-content ep-bg-purple" />
@@ -39,8 +39,8 @@ const props = defineProps({
   rowData: Object
 })
 
-const tips1 = '预付房费后，今天18点前，免费取消。'
-const tips2 = '今天18点 - 明天12点取消，收取1晚房费作为罚金。'
+const tips1 = '预付房费后，入住日期当天前，免费取消。'
+const tips2 = '入住日期当天取消，收取1晚房费作为罚金。'
 </script>
 
 <style lang="less" scoped>

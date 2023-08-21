@@ -6,24 +6,29 @@
         <div class="header-text">预订信息</div>
         <div class="book-date">
           <span>入住日期: </span>
-          <el-input disabled></el-input>
+          <el-input disabled v-model="startDate"></el-input>
           <span>离店日期: </span>
-          <el-input disabled></el-input>
+          <el-input disabled v-model="endDate"></el-input>
           <span>房间数量</span>
-          <el-select></el-select>
+          <el-input disabled v-model="roomNum"></el-input>
         </div>
 
         <div class="book-detail-message">
           <div class="header-text">入住信息</div>
           <div class="book-info">
             <span>联系人: </span>
-            <el-input></el-input>
+            <el-input v-model="name"></el-input>
             <span>手机号码: </span>
-            <el-input></el-input>
+            <el-input v-model="tel"></el-input>
             <span>入住人数</span>
-            <el-select></el-select>
+            <el-select v-model="numValue">
+              <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
+            </el-select>
           </div>
-          <div class="id-card">身份证号:<el-input></el-input></div>
+          <div class="id-card">
+            身份证号:<el-input v-model="idCard" v-idCard></el-input
+            ><span class="id-card-error" ref="idError">身份证格式错误</span>
+          </div>
           <div class="book-remark">备注: <el-input v-model="textarea" /></div>
         </div>
         <div class="remind">
@@ -70,10 +75,57 @@
 
 <script setup>
 import Header from '@/components/Header.vue'
+import { useHotelStore } from '@/store/hotel.js'
+import { ref } from 'vue'
 
-const remindMessage1 = '预付房费后，入住前一天16点前，免费取消。入住前一天16点-入住当天12点取消，收取一晚房费作为罚金。'
+const remindMessage1 = '预付房费后，入住前一天免费取消。入住当天取消，收取一晚房费作为罚金。'
 const remindMessage2 =
   '酒店于住店当天15:00后办理入住，离店当天12:00前办理退房，入离日期以当地时间为准。如您在15:00前到达，可能需要等待方能入住。若超过酒店最多入住人数，则可能需要补差价或酒店拒绝入住，具体以酒店安排为准'
+
+const hotelStore = useHotelStore()
+const startDate = hotelStore.startDate
+const endDate = hotelStore.endDate
+const roomNum = 1
+
+const numValue = ref('')
+const options = [
+  {
+    value: '1',
+    label: '1'
+  },
+  {
+    value: '2',
+    label: '2'
+  },
+  {
+    value: '3',
+    label: '3'
+  }
+]
+
+const name = ref('')
+const tel = ref('')
+const textarea = ref('')
+const idCard = ref('')
+const isIdCardValid = value => {
+  return /^[0-9]{17}([0-9]|X)$/i.test(value)
+}
+
+const idError = ref('')
+const vIdCard = {
+  mounted(el, binding) {
+    // 在 el-input 元素上监听 input 事件
+    el.addEventListener('input', () => {
+      // 将值传递给指令
+      binding = idCard.value
+      if (!isIdCardValid(binding)) {
+        el.classList.add('invalid')
+      } else {
+        el.classList.remove('invalid')
+      }
+    })
+  }
+}
 </script>
 
 <style lang="less" scoped>
@@ -163,6 +215,9 @@ const remindMessage2 =
             width: 300px;
             height: 30px;
             padding-left: 20px;
+          }
+          .id-card-error {
+            color: red;
           }
         }
         .book-remark {

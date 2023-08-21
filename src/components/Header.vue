@@ -15,6 +15,9 @@
         <i><Phone /></i>联系我们
       </button>
     </div>
+    <div class="user">
+      <slot name="user"></slot>
+    </div>
   </div>
 </template>
 
@@ -71,6 +74,11 @@ const toHome = () => {
         vertical-align: middle;
       }
     }
+  }
+  .user {
+    position: absolute;
+    top: 3.8%;
+    right: 16%;
   }
 }
 </style>
