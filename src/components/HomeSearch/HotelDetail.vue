@@ -52,13 +52,13 @@ const toHotelInfo = () => {
 .hotel-detail {
   position: relative;
   width: 100%;
-  height: 170px;
+  height: 220px;
   background: #fffcf3;
   padding-bottom: 20px;
   padding-top: 20px;
   border-bottom: solid 1px #e6e7e7;
   box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.1);
-
+  overflow: hidden;
   .image {
     display: inline-block;
 
@@ -71,7 +71,7 @@ const toHotelInfo = () => {
   .info {
     display: inline-block;
     position: absolute;
-    width: 300px;
+    width: 400px;
     margin-left: 20px;
     margin-top: 10px;
     background-color: #fffcf3;
@@ -101,7 +101,12 @@ const toHotelInfo = () => {
     .intro {
       padding-top: 10px;
       font-size: 16px;
-      width: 500px;
+      width: 600px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
 
       i {
         font-weight: 500;

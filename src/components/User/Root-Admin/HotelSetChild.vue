@@ -8,20 +8,15 @@
       <div class="address"><i>地址: </i>{{ address }}</div>
       <div class="intro"><i>简介: </i>{{ intro }}</div>
       <div class="tel"><i>电话: </i>{{ tel }}</div>
-      <div class="tag"><el-tag>经济型</el-tag> <el-tag>市中心</el-tag></div>
-      <div class="hotel-price">
-        ¥ <el-text tag="b">{{ price }}</el-text
-        >起
-      </div>
     </div>
-    <el-button type="primary" size="large" class="updateButton">修改信息</el-button>
-    <el-button type="primary" size="large" class="deleteButton">删除酒店</el-button>
+    <el-button type="primary" size="large" class="deleteButton" @click="deleteButton">删除酒店</el-button>
   </div>
 </template>
 
 <script setup>
-import { defineProps, ref } from 'vue'
+import { defineProps, ref, defineEmits } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
+import { deleteHotel } from '@/api/index.js'
 
 const props = defineProps({
   hotel: Object
@@ -29,16 +24,32 @@ const props = defineProps({
 const { id, name, address, intro, picture, tel } = props.hotel
 const price = ref(99)
 
-// 路由跳转
-const router = useRouter()
-const route = useRoute()
+const emit = defineEmits(['updateHotel'])
+
+const session_id = window.localStorage.getItem('session_id')
+const res = ref('')
+const deleteButton = async () => {
+  res.value = await deleteHotel(session_id, id)
+  if (res.value === 200) {
+    ElMessage({
+      message: '删除成功',
+      type: 'success'
+    })
+    emit('updateHotel')
+  } else {
+    ElMessage({
+      message: '删除失败，请重试~',
+      type: 'warning'
+    })
+  }
+}
 </script>
 
 <style scoped lang="less">
 .hotel-detail-child {
   position: relative;
   width: 100%;
-  height: 170px;
+  height: 200px;
   background: #fffcf3;
   padding-bottom: 20px;
   padding-top: 20px;

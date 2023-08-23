@@ -12,8 +12,11 @@
 
     <div class="room-type">
       <RoomRow v-for="row in categorizedData" :rowData="row" :key="row.room_id">
-        <template v-slot:button="slotProps">
-          <slot name="button" :roomDetail="slotProps.roomDetail"></slot>
+        <template v-slot:button>
+          <el-col :span="4"
+            ><div class="grid-content ep-bg-purple-light" />
+            <el-text style="color: blue">{{ getCountValue(row) }}</el-text>
+          </el-col>
         </template>
       </RoomRow>
     </div>
@@ -21,17 +24,60 @@
 </template>
 
 <script setup>
-import { defineProps, ref } from 'vue'
-import RoomRow from './RoomRow.vue'
-import { useRouter } from 'vue-router'
+import { defineProps, ref, reactive, computed } from 'vue'
+import RoomRow from '../../HotelInfo/RoomRow.vue'
+import { getHotelOrder, getMyHotel } from '@/api/index.js'
 
 const props = defineProps({
   roomDetail: Object
 })
 const roomList = props.roomDetail.roomList
 
-const categorizedData = ref([])
+const session_id = window.localStorage.getItem('session_id')
 
+const counts = reactive({})
+const orderList = ref([])
+const hotel_id = ref(0)
+const idList = ref([])
+
+const getData = async () => {
+  hotel_id.value = await getMyHotel(session_id)
+  orderList.value = await getHotelOrder(session_id, hotel_id.value.id)
+  orderList.value.forEach(item => {
+    idList.value.push(item.room_id)
+  })
+}
+
+const groupedData = async () => {
+  await getData()
+  roomList.forEach(obj => {
+    if (!idList.value.includes(obj.room_id)) {
+      const key = `${obj.room_name}-${obj.room_type}`
+      if (!counts[key]) {
+        counts[key] = {
+          room_name: obj.room_name,
+          room_type: obj.room_type,
+          count: 1
+        }
+      } else {
+        counts[key].count++
+      }
+    } else {
+    }
+  })
+  console.log(counts)
+}
+groupedData()
+
+const getCountValue = row => {
+  const key = `${row.room_name}-${row.room_type}`
+  return computed(() => {
+    const countData = counts[key]
+    return countData ? countData.count : 0
+  })
+}
+
+const categorizedData = ref([])
 const objectsEqual = (obj1, obj2) => {
   const str1 = JSON.stringify(obj1)
   const str2 = JSON.stringify(obj2)

@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import { updatePassword } from '@/api/index.js'
 export default {
   data() {
     var validatePass = (rule, value, callback) => {
@@ -50,14 +51,32 @@ export default {
       rules: {
         newPassword: [{ validator: validatePass, trigger: 'blur' }],
         checkPassword: [{ validator: validatePass2, trigger: 'blur' }]
-      }
+      },
+      session_id: window.localStorage.getItem('session_id')
     }
   },
   methods: {
     submitForm(formName) {
-      this.$refs[formName].validate(valid => {
+      this.$refs[formName].validate(async valid => {
+        const newPass = {
+          oldPassword: this.ruleForm.oldPassword,
+          newPassword: this.ruleForm.newPassword
+        }
+        console.log(newPass)
         if (valid) {
-          alert('submit!')
+          const res = await updatePassword(this.session_id, newPass)
+          if (res === 200) {
+            ElMessage({
+              message: '修改密码成功.',
+              type: 'success'
+            })
+            this.resetForm('ruleForm')
+          } else {
+            ElMessage({
+              message: '修改密码失败，请稍后再试.',
+              type: 'warning'
+            })
+          }
         } else {
           console.log('error submit!!')
           return false

@@ -39,12 +39,14 @@ const props = defineProps({
   rowData: Object
 })
 
-// console.log(props.rowData)
 const roomDetail = ref({
   room_name: props.rowData.room_name,
   room_type: props.rowData.room_type,
   room_price: props.rowData.room_price,
-  room_image: props.rowData.room_image
+  room_image: props.rowData.room_image,
+  room_detail: props.rowData.room_detail,
+  room_intro: props.rowData.room_intro,
+  booker_num: props.rowData.booker_num
 })
 
 const tips1 = '预付房费后，入住日期当天前，免费取消。'

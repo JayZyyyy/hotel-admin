@@ -53,6 +53,7 @@ onMounted(() => getHotelList())
 let { proxy } = getCurrentInstance()
 proxy?.$mitt.on('searchHotel', res => {
   hotelList.value = res
+  count.value = hotelList.value.length
 })
 </script>
 

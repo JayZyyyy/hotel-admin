@@ -5,11 +5,11 @@
         <span>订单号: </span> <span>{{ order.id }}</span>
       </div>
       <div>
-        <span>预订日期: </span> <span>{{ order.time }}</span>
+        <span>预订日期: </span> <span>{{ dayjs(order.time).format('YYYY-MM-DD') }}</span>
       </div>
     </div>
     <div class="image">
-      <img src="picture" alt="" />
+      <img :src="order.room_image" alt="" />
     </div>
     <div class="info">
       <h2>{{ hotel_name }}</h2>
@@ -21,22 +21,41 @@
       </div>
     </div>
     <div class="hotel-price">
-      <div class="price">总价: ¥ <el-text tag="b">123</el-text></div>
+      <div class="price">
+        总价: ¥ <el-text tag="b">{{ order.price }}</el-text>
+      </div>
       <div>
-        <el-button type="info" size="default" disabled>已支付</el-button>
-        <el-button type="primary" size="default" @click="cancelOrder">取消订单</el-button>
+        <el-button type="info" size="default" disabled v-if="isCancel">已支付</el-button>
+        <el-button type="warning" size="default" disabled v-else>已取消</el-button>
+        <el-button type="primary" size="default" @click="cancelOrder" :disabled="!isCancel">取消订单</el-button>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { defineProps, ref } from 'vue'
-import { getOneHotel } from '../../api'
+import { defineProps, ref, defineEmits } from 'vue'
+import { getOneHotel, cancelRoom } from '../../api'
 import { betweenDays } from '@/utils/index.js'
+import dayjs from 'dayjs'
+import { ElMessage } from 'element-plus'
+
 const props = defineProps({
   order: Object
 })
+
+const emit = defineEmits(['cancelUpdate'])
+
+// buttonShow
+const isCancel = ref(false)
+const changeButton = () => {
+  if (props.order.state === 0) {
+    isCancel.value = true
+  } else if (props.order.state === 3) {
+    isCancel.value = false
+  }
+}
+changeButton()
 
 const hotel_name = ref('')
 const hotel = async () => {
@@ -45,9 +64,15 @@ const hotel = async () => {
 }
 hotel()
 
-
-const cancelOrder = () => {
-  
+const session_id = window.localStorage.getItem('session_id')
+const cancelRes = ref('')
+const cancelOrder = async () => {
+  cancelRes.value = await cancelRoom(props.order.id, session_id)
+  ElMessage({
+    message: '取消成功',
+    type: 'success'
+  })
+  emit('cancelUpdate')
 }
 </script>
 

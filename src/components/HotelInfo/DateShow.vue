@@ -33,7 +33,8 @@ import { betweenDays } from '@/utils/index.js'
 const editable = ref(false)
 const clearable = ref(false)
 const disabledStart = time => {
-  return time.getTime() < Date.now()
+  const today = new Date()
+  return time.getTime() < today.getTime()
 }
 const disabledEnd = time => {
   return time.getTime() < new Date(startDate.value).getTime()

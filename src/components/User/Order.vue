@@ -13,6 +13,7 @@ const session_id = window.localStorage.getItem('session_id')
 const orderList = ref([])
 const getOrderList = async () => {
   orderList.value = await getOrder(session_id)
+  orderList.value.orders = orderList.value.orders.sort((a, b) => b.id - a.id)
 }
 getOrderList()
 </script>

@@ -1,28 +1,28 @@
 <template>
   <div class="room-set">
-    <RoomHeader> </RoomHeader>
-    <RoomInfo :roomDetail="room" v-for="room in roomDetail" :key="room.room_id">
-      <template v-slot:button>
-        <el-col :span="4"
-          ><div class="grid-content ep-bg-purple-light" />
-          <el-text>空房数量</el-text>
-        </el-col>
-      </template></RoomInfo
+    <RoomHeader>
+      <template #default>
+        <span> 剩余数量 </span>
+      </template></RoomHeader
     >
+    <RoomInfo :roomDetail="room" v-for="room in roomDetail" :key="room.room_id"></RoomInfo>
   </div>
 </template>
 
 <script setup>
 import RoomHeader from '../../HotelInfo/RoomHeader.vue'
-import RoomInfo from '../../HotelInfo/RoomInfo.vue'
+import RoomInfo from './AdminRoomInfo.vue'
 
 import { ref } from 'vue'
-import { getOneHotel } from '@/api/index.js'
+import { getOneHotel, getMyHotel } from '@/api/index.js'
 
 const hotelDetail = ref({})
 const roomDetail = ref([])
+const session_id = window.localStorage.getItem('session_id')
+const hotel_id = ref(0)
 const getData = async () => {
-  hotelDetail.value = await getOneHotel()
+  hotel_id.value = await getMyHotel(session_id)
+  hotelDetail.value = await getOneHotel(hotel_id.value.id)
   roomDetail.value = hotelDetail.value.nameList
 }
 getData()

@@ -3,11 +3,11 @@
     <el-container>
       <el-aside width="200px"
         ><el-menu default-active="2" class="el-menu-vertical-demo" @select="handleSelect">
-          <el-menu-item index="order" v-bind:class="[isActive ? show : noShow]">
+          <el-menu-item index="order">
             <el-icon><Tickets /></el-icon>
             <span>我的订单</span>
           </el-menu-item>
-          <el-menu-item index="userInfo" v-bind:class="[isActive ? show : noShow]">
+          <el-menu-item index="userInfo">
             <el-icon><Message /></el-icon>
             <span>个人信息</span>
           </el-menu-item>

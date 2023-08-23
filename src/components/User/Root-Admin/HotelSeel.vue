@@ -13,12 +13,13 @@
 import { ref, onMounted } from 'vue'
 import HotelSeelChild from './HotelSeelChild.vue'
 
-import { getHotel } from '@/api/index.js'
+import { getHotelDetail } from '@/api/index.js'
 
 // 获取酒店信息
 let hotelList = ref([])
+const session_id = window.localStorage.getItem('session_id')
 const getHotelList = async () => {
-  hotelList.value = await getHotel()
+  hotelList.value = await getHotelDetail(session_id)
   console.log(hotelList.value)
 }
 

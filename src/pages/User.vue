@@ -12,7 +12,7 @@
             <span>待支付</span>
           </div>
           <div class="middle-box">
-            <span class="number">0</span>
+            <span class="number">{{ countState0 }}</span>
             <span>待入住</span>
           </div>
           <div>
@@ -38,8 +38,19 @@ import { User } from '../components/User'
 import { Aboutus } from '../components/Home'
 import UserNav from '../components/UserNav.vue'
 import { ref } from 'vue'
+import { getOrder } from '@/api/index.js'
 
 const name = window.localStorage.getItem('user_name')
+
+const session_id = window.localStorage.getItem('session_id')
+const orderList = ref([])
+const countState0 = ref(0)
+const getOrderList = async () => {
+  orderList.value = await getOrder(session_id)
+  countState0.value = orderList.value.orders.reduce((pre, order) => (order.state === 0 ? pre + 1 : pre), 0)
+  console.log(countState0.value)
+}
+getOrderList()
 </script>
 
 <style lang="less" scoped>

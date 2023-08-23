@@ -12,7 +12,7 @@
           <span>离店日期: </span>
           <el-input disabled v-model="endDate"></el-input>
           <span>房间数量</span>
-          <el-input disabled v-model="roomNum"></el-input>
+          <el-input v-model.number="roomNum"></el-input>
         </div>
 
         <div class="book-detail-message">
@@ -23,9 +23,7 @@
             <span>手机号码: </span>
             <el-input v-model="tel"></el-input>
             <span>入住人数</span>
-            <el-select v-model="numValue">
-              <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
-            </el-select>
+            <el-input v-model.number="numValue"> </el-input>
           </div>
           <div class="id-card">
             身份证号:<el-input v-model="idCard" v-idCard></el-input
@@ -50,7 +48,7 @@
           <span>入住房型</span>
           <div>
             <span class="left">{{ room_name }}</span>
-            <span class="right">1间</span>
+            <span class="right">{{ roomNum }}间</span>
           </div>
           <span>价格名称</span>
           <div>
@@ -59,7 +57,7 @@
           <span>入住日期</span>
           <div>
             <span class="left">{{ startDate }}-{{ endDate }}</span>
-            <span class="right">晚</span>
+            <span class="right">{{ betweenDays(startDate, endDate) }}晚</span>
           </div>
           <span class="room-price-left">房费小计</span>
           <span class="room-price-right">¥{{ room_price }}</span>
@@ -67,7 +65,7 @@
         <el-divider border-style="dashed" class="next-divider" />
         <div class="total-price">
           <span class="left">总金额</span>
-          <span class="right">¥{{ room_price }}</span>
+          <span class="right">¥{{ room_price * betweenDays(startDate, endDate) * roomNum }}</span>
         </div>
         <el-button type="primary" class="submit-button" @click="submitOrder">提交订单</el-button>
       </div>
@@ -82,6 +80,7 @@ import { ref, reactive } from 'vue'
 import { useBookStore } from '../store/book'
 import { bookRoom } from '@/api/index.js'
 import { useRouter } from 'vue-router'
+import { betweenDays } from '@/utils/index.js'
 const router = useRouter()
 
 const remindMessage1 = '预付房费后，入住前一天免费取消。入住当天取消，收取一晚房费作为罚金。'
@@ -101,23 +100,9 @@ const room_image = bookStore.room_image
 const hotelStore = useHotelStore()
 const startDate = hotelStore.startDate
 const endDate = hotelStore.endDate
-const roomNum = 1
+const roomNum = ref(1)
 
 const numValue = ref(0)
-const options = [
-  {
-    value: '1',
-    label: '1'
-  },
-  {
-    value: '2',
-    label: '2'
-  },
-  {
-    value: '3',
-    label: '3'
-  }
-]
 
 const name = ref('')
 const tel = ref('')
@@ -130,8 +115,8 @@ const orderMessage = reactive({
   hotelId: hotel_id,
   roomName: room_name,
   roomType: room_type,
-  roomNum: roomNum,
-  userNum: numValue,
+  roomNum: roomNum.value,
+  userNum: numValue.value,
   bookerId: idCard,
   bookerName: name,
   bookerTel: tel,

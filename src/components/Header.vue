@@ -28,7 +28,11 @@ const toHome = () => {
   router.push('/home')
 }
 
-const toMyOrder = () => {}
+const session_id = window.localStorage.getItem('session_id')
+
+const toMyOrder = () => {
+  router.push(`/user/${session_id}/order`)
+}
 </script>
 
 <style lang="less" scoped>

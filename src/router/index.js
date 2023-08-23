@@ -64,6 +64,11 @@ const routes = [
         component: () => import('../components/User/Admin/RoomNum.vue')
       },
       {
+        path: 'checkOut',
+        name: 'checkOut',
+        component: () => import('../components/User/Admin/checkOut.vue')
+      },
+      {
         path: 'hotelSet',
         name: 'hotelSet',
         component: () => import('../components/User/Root-Admin/HotelSet.vue')

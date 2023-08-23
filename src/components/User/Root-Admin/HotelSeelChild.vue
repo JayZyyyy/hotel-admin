@@ -4,8 +4,8 @@
       <img :src="picture" alt="" />
     </div>
     <div class="info">
-      <h2>{{ name }}</h2>
-      <div class="address"><i>地址: </i>{{ address }}</div>
+      <h2 class="name">{{ name }}</h2>
+      <div class="address"><i>地址: </i>{{ area }}</div>
       <div class="intro"><i>简介: </i>{{ intro }}</div>
       <div class="tag"><el-tag>经济型</el-tag> <el-tag>市中心</el-tag></div>
       <div class="hotel-price">
@@ -15,9 +15,9 @@
     </div>
     <div class="today">
       <div>今日营业情况</div>
-      <div>入住房间: 1</div>
-      <div>入住人数: 3</div>
-      <div>营业额(¥) : 44</div>
+      <div>入住房间: {{ roomCount }}</div>
+      <div>入住人数: {{ consumer }}</div>
+      <div>营业额(¥) : {{ totalMoney }}</div>
     </div>
   </div>
 </template>
@@ -29,7 +29,7 @@ import { useRouter, useRoute } from 'vue-router'
 const props = defineProps({
   hotel: Object
 })
-const { id, name, address, intro, picture, price } = props.hotel
+const { id, name, area, intro, picture, price, roomCount, consumer, totalMoney } = props.hotel
 
 // 路由跳转
 const router = useRouter()
@@ -73,12 +73,16 @@ const toHotelInfo = () => {
     margin-top: 10px;
     background-color: #fffcf3;
 
+    .name {
+      width: 450px;
+    }
+
     h2 {
       font-size: 20px;
       font-weight: 700;
     }
     .address {
-      padding-top: 20px;
+      padding-top: 10px;
       font-size: 16px;
 
       i {
@@ -87,12 +91,18 @@ const toHotelInfo = () => {
     }
 
     .intro {
-      padding-top: 15px;
-      font-size: 16px;
-      width: 500px;
-
+      padding-top: 5px;
+      font-size: 12px;
+      width: 350px;
+      height: 50px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
       i {
         font-weight: 500;
+        -webkit-line-clamp: 3;
       }
     }
     .tag {
@@ -107,7 +117,7 @@ const toHotelInfo = () => {
     }
 
     .hotel-price {
-      width: 100px;
+      width: 200px;
       height: 50px;
       font-size: 14px;
       color: #ff5341;

@@ -1,62 +1,63 @@
-{
-  "code": 200,
-  "data": {
-    "name": "值具共立济",
-    "address": "青海省阳泉市壶关县",
-    "tel": "13175853601",
-    "intro": "non sit",
-    "image": "http://dummyimage.com/400x400",
-    "nameList": [
-      {
-        "name": "江景房",
-        "room_intro": "真正无敌房间捏123213213",
-        "room_image": "http://dummyimage.com/400x400",
-        "roomList": [
-          {
-            "room_id": 9123,
-            "room_name": "江景房",
-            "room_intro": "真正无敌房间捏123213213",
-            "room_type": "总统套房",
-            "room_price": 6,
-            "room_detail": "含早餐",
-            "booker_num": 3
-          },
-          {
-            "room_id": 4129,
-            "room_name": "江景房",
-            "room_intro": "真正无敌房间捏123213213",
-            "room_type": "总统小套房",
-            "room_price": 37,
-            "room_detail": "含早餐",
-            "booker_num": 3
-          }
-        ]
-      },
-      {
-        "name": "小海景房",
-        "room_intro": "真正无敌房间捏",
-        "room_image": "http://dummyimage.com/400x400",
-        "roomList": [
-          {
-            "room_id": 94,
-            "room_name": "小海景房",
-            "room_intro": "真正无敌房间捏",
-            "room_type": "总统套房",
-            "room_price": 6,
-            "room_detail": "含早餐",
-            "booker_num": 3
-          },
-          {
-            "room_id": 49,
-            "room_name": "小海景房",
-            "room_intro": "真正无敌房间捏",
-            "room_type": "总统小套房",
-            "room_price": 37,
-            "room_detail": "含早餐",
-            "booker_num": 3
-          }
-        ]
-      }
-    ]
+[
+  {
+    "room_name": "天际大床房",
+    "room_intro": "大床2米",
+    "room_type": "大床房",
+    "room_price": 5188.0,
+    "room_detail": "含早餐",
+    "room_image": "http://images.bestwehotel.com/images/d2e9a247fa3d5d6a_640_480.jpg",
+    "booker_num": 3
+  },
+  {
+    "room_name": "天际大床房",
+    "room_intro": "大床2米",
+    "room_type": "大床房",
+    "room_price": 5188.0,
+    "room_detail": "含早餐",
+    "room_image": "http://images.bestwehotel.com/images/d2e9a247fa3d5d6a_640_480.jpg",
+    "booker_num": 3
+  },
+  {
+    "room_name": "天际大床房",
+    "room_intro": "大床2米",
+    "room_type": "大床房",
+    "room_price": 5188.0,
+    "room_detail": "含早餐",
+    "room_image": "http://images.bestwehotel.com/images/d2e9a247fa3d5d6a_640_480.jpg",
+    "booker_num": 3
+  },
+  {
+    "room_id": "6755ead0-27ae-4743-9768-da4d064bee88",
+    "room_name": "天际大床房",
+    "room_intro": "大床2米",
+    "room_type": "豪华套房",
+    "room_price": 2.0,
+    "room_detail": "不含早餐",
+    "room_image": "http://43.156.9.217:8080/image/sticker",
+    "booker_num": 3
   }
-}
+]
+
+[
+  {
+    "room_name": "天际大床房",
+    "room_intro": "大床2米",
+    "room_type": "大床房",
+    "room_price": 5188.0,
+    "room_detail": "含早餐",
+    "room_image": "http://images.bestwehotel.com/images/d2e9a247fa3d5d6a_640_480.jpg",
+    "booker_num": 3,
+    "room_num": 3
+  }
+  {
+    "room_id": "6755ead0-27ae-4743-9768-da4d064bee88",
+    "room_name": "天际大床房",
+    "room_intro": "大床2米",
+    "room_type": "豪华套房",
+    "room_price": 2.0,
+    "room_detail": "不含早餐",
+    "room_image": "http://43.156.9.217:8080/image/sticker",
+    "booker_num": 3,
+    "room_num": 1
+  }
+]

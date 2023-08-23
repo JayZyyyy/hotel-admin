@@ -58,10 +58,6 @@ const options = [
       {
         value: '广州',
         label: '广州'
-      },
-      {
-        value: '下北泽',
-        label: '下北泽'
       }
     ]
   },
@@ -83,9 +79,6 @@ const options = [
     ]
   }
 ]
-watchEffect(() => {
-  console.log(valuePlace.value)
-})
 
 const dateArr = ref([])
 let startTime = ref('')

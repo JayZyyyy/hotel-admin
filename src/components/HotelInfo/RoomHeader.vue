@@ -6,7 +6,9 @@
     <span class="room-cancel">取消政策</span>
     <span class="room-people">人数上限</span>
     <span class="room-price">房价</span>
-    <span class="room-book"></span>
+    <span class="room-book">
+      <slot></slot>
+    </span>
   </div>
 </template>
 
