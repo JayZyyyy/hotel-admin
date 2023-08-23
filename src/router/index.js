@@ -37,7 +37,7 @@ const routes = [
     name: 'user',
     component: () => import('../pages/User.vue'),
     children: [
-      { path: '', name: 'user', component: () => import('../components/User/userInfo.vue') },
+      { path: '', name: 'user', component: () => import('../components/User/UserInfo.vue') },
       {
         path: 'order',
         name: 'order',
@@ -46,7 +46,7 @@ const routes = [
       {
         path: 'userInfo',
         name: 'userInfo',
-        component: () => import('../components/User/userInfo.vue')
+        component: () => import('../components/User/UserInfo.vue')
       },
       {
         path: 'passwordUpdate',
