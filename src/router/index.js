@@ -66,7 +66,7 @@ const routes = [
       {
         path: 'checkOut',
         name: 'checkOut',
-        component: () => import('../components/User/Admin/checkOut.vue')
+        component: () => import('../components/User/Admin/CheckOut.vue')
       },
       {
         path: 'hotelSet',
@@ -76,7 +76,7 @@ const routes = [
       {
         path: 'hotelSeel',
         name: 'hotelSeel',
-        component: () => import('../components/User/Root-Admin/hotelSeel.vue')
+        component: () => import('../components/User/Root-Admin/HotelSeel.vue')
       }
     ]
   },
