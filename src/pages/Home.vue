@@ -2,9 +2,9 @@
   <div class="common-layout">
     <el-container>
       <el-header>
-        <div class="dropdown">
+        <!-- div class="dropdown">
           <DropDown @scrollTo="scrollTo"></DropDown>
-        </div>
+        </！div -->
         <div class="logo">
           <el-image style="width: 220px; height: 100px" :src="logo" fit="scale-down" />
         </div>
