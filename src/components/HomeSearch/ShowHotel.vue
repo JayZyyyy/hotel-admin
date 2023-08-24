@@ -10,7 +10,7 @@
           >
           <b> 家酒店</b>
         </div>
-        <div class="sort-button">
+        <!--div class="sort-button">
           <el-dropdown>
             <div class="el-dropdown-link">排序方式:</div>
             <template #dropdown>
@@ -21,7 +21,7 @@
             </template>
           </el-dropdown>
           <div class="sortText">{{ sortWay }}</div>
-        </div>
+        </div-->
       </div>
       <div class="hotel-detail-show">
         <HotelDetail v-for="hotel of hotelList" :hotel="hotel" :key="hotel.id"></HotelDetail>
@@ -71,6 +71,7 @@ proxy?.$mitt.on('searchHotel', res => {
       padding-left: 20px;
       padding-top: 2px;
       width: 200px;
+      margin-top: 30px;
       margin-left: 5%;
       box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.1);
       .top-message {
